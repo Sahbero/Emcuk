@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pacify — Yetişkinler için Özel Emzikler</title>
+<meta name="description" content="Rahatlatıcı, şık ve güvenli yetişkin emzikleri. Konfor, hijyen ve eğlenceli tasarım bir arada." />
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#ff6b6b;
+    --muted:#9aa4b2;
+    --glass: rgba(255,255,255,0.04);
+    --radius:14px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  html,body{height:100%}
+  body{
+    margin:0;
+    background: linear-gradient(180deg,#071022 0%, #07182b 50%, #0b1220 100%);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    padding:24px;
+  }
+
+  /* Container */
+  .wrap{max-width:1100px;margin:0 auto;}
+
+  /* Header */
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{
+    width:56px;height:56px;border-radius:12px;background:
+    radial-gradient(circle at 30% 20%, rgba(255,107,107,0.15), transparent 10%),
+    linear-gradient(135deg,#ff8b8b,#ff6b6b);
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:white;
+    box-shadow:0 6px 18px rgba(0,0,0,0.45);
+  }
+  .brand h1{font-size:18px;margin:0}
+  .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+  nav .btn{
+    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;
+  }
+  .hero{
+    display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:28px;
+  }
+
+  /* Hero left */
+  .eyebrow{color:var(--accent);font-weight:700;font-size:13px}
+  h2{font-size:34px;margin:10px 0 6px;line-height:1.02}
+  p.lead{color:var(--muted);margin:0 0 16px}
+
+  .features{display:flex;gap:12px;margin-top:14px}
+  .chip{background:var(--glass);padding:10px 12px;border-radius:999px;font-size:13px;color:var(--muted);display:inline-flex;gap:8px;align-items:center}
+
+  /* Product card (hero right) */
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(4px);
+  }
+  .product-preview{display:flex;gap:14px;align-items:center}
+  .product-art{width:180px;height:180px;border-radius:14px;background:linear-gradient(135deg,#ffe6e6, #ffdede);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 12px 30px rgba(0,0,0,0.5)}
+  .product-art svg{width:120px;height:120px;opacity:0.95}
+  .product-meta{flex:1}
+  .price{font-size:20px;font-weight:700;margin:6px 0}
+  .variant-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .variant{padding:8px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer;color:var(--muted)}
+  .variant.active{background:linear-gradient(90deg,#ff9b9b,#ff6b6b);color:#071022;border:0}
+  .qty{display:flex;gap:8px;align-items:center;margin-top:12px}
+  .qty button{width:36px;height:36px;border-radius:10px;border:0;background:var(--glass);color:var(--muted);cursor:pointer}
+  .add{margin-top:12px;padding:12px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#ff8b8b);border:0;color:#071022;font-weight:700;cursor:pointer;width:100%}
+
+  /* Grid sections */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+  .card.small{padding:16px}
+  .specs li{margin-bottom:8px;color:var(--muted)}
+
+  /* Testimonials & FAQ */
+  .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .testimonial{background:var(--glass);padding:12px;border-radius:12px;color:var(--muted)}
+
+  .faq{margin-top:18px}
+  .faq dt{font-weight:700;margin-top:10px}
+  .faq dd{margin:0;color:var(--muted);margin-bottom:8px}
+
+  /* Footer */
+  footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+  /* Responsive */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .testimonials{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr}
+    header{flex-direction:column;align-items:flex-start}
+    .brand h1{font-size:16px}
+    h2{font-size:26px}
+  }
+
+  /* Mini cart drawer */
+  .cart-drawer{
+    position:fixed;right:18px;bottom:18px;width:340px;max-width:calc(100% - 36px);
+    background:linear-gradient(180deg,#06101a, #071322);border-radius:12px;padding:14px;box-shadow:0 20px 50px rgba(2,6,23,0.6);
+    transform:translateY(120%);transition:transform .28s ease;z-index:1000;
+  }
+  .cart-drawer.open{transform:translateY(0)}
+  .cart-item{display:flex;gap:12px;align-items:center;border-bottom:1px dashed rgba(255,255,255,0.03);padding:8px 0}
+  .cart-actions{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:12px}
+  .small-btn{padding:8px 10px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">PZ</div>
+        <div>
+          <h1>Pacify</h1>
+          <p>Yetişkinlere özel rahatlama & tasarım</p>
+        </div>
+      </div>
+      <nav>
+        <button class="btn" onclick="scrollToSection('products')">Ürünler</button>
+        <button class="btn" onclick="scrollToSection('faq')">SSS</button>
+        <button class="btn" onclick="toggleCart()">Sepet (<span id="cart-count">0</span>)</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <div class="eyebrow">YENİ • Sınırlı stok</div>
+          <h2 id="hero-title">Rahatlama, stil ile birleşince — <span style="color:var(--accent)">Pacify</span></h2>
+          <p class="lead">Ergonomik, tıbbi sınıf silikon ve şık tasarım. Günlük stres anlarında hızlı bir sakinleşme aracı. Hijyenik kapaklar, değiştirilebilir başlıklar ve kolay temizlenebilir tasarım.</p>
+
+          <div class="features" role="list">
+            <div class="chip" role="listitem">Tıbbi sınıf silikon</div>
+            <div class="chip" role="listitem">Özel taşıma kılıfı</div>
+            <div class="chip" role="listitem">3 renk & 2 boy</div>
+          </div>
+
+          <ul class="specs" style="margin-top:16px">
+            <li>Ölçüler: Küçük (S), Orta (M)</li>
+            <li>Malzeme: Silikon (BPA free)</li>
+            <li>Hijyen: Kaynatılabilir başlık, kolay temizlenebilir</li>
+          </ul>
+
+          <div style="margin-top:16px;display:flex;gap:10px">
+            <button class="add" onclick="scrollToSection('products')">Hemen İncele</button>
+            <button class="small-btn" onclick="openDemo()">Nasıl Kullanılır? (Kısa Demo)</button>
+          </div>
+        </div>
+
+        <aside class="card" aria-label="Ürün kartı">
+          <div class="product-preview">
+            <div class="product-art" id="art">
+              <!-- Basit inline SVG ürün görseli (değiştirin) -->
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g fill="none" fill-rule="evenodd">
+                  <ellipse cx="32" cy="44" rx="20" ry="8" fill="#ffdede"/>
+                  <path d="M22 30c0-6 10-12 20-6 8 5 6 12 0 14-8 2-16 2-20-8z" fill="#fff0f0"/>
+                  <circle cx="34" cy="30" r="6" fill="#ff6b6b"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="product-meta">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div>
+                  <div style="font-size:13px;color:var(--muted)">Koleksiyon</div>
+                  <div style="font-weight:700">Pacify Classic</div>
+                </div>
+                <div class="price" id="price">₺249</div>
+              </div>
+
+              <div class="variant-row" id="variants">
+                <button class="variant active" data-price="249" data-color="Pastel Pembe">Pastel Pembe</button>
+                <button class="variant" data-price="249" data-color="Deniz Mavisi">Deniz Mavisi</button>
+                <button class="variant" data-price="249" data-color="Gece Siyahı">Gece Siyahı</button>
+              </div>
+
+              <div class="qty" aria-label="Miktar seçim">
+                <button onclick="changeQty(-1)">−</button>
+                <div id="qty" style="min-width:28px;text-align:center">1</div>
+                <button onclick="changeQty(1)">+</button>
+              </div>
+
+              <button class="add" onclick="addToCart()">Sepete Ekle</button>
+
+              <div style="margin-top:10px;color:var(--muted);font-size:13px">Ücretsiz kargo 300₺ ve üzeri.</div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Ürünler -->
+      <section id="products">
+        <h3 style="margin-bottom:8px">Ürünler</h3>
+        <div class="grid" aria-live="polite">
+          <div class="card small" role="article">
+            <h4>Pacify Classic</h4>
+            <p style="color:var(--muted);margin:6px 0">Klasik ve yumuşak, günlük kullanım için ideal.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-weight:700">₺249</div>
+              <button class="small-btn" onclick="prefillAndOpen('Pacify Classic',249)">Seç</button>
+            </div>
+          </div>
+
+          <div class="card small" role="article">
+            <h4>Pacify Travel (Kılıflı)</h4>
+            <p style="color:var(--muted);margin:6px 0">Taşıma kılıfı ve yedek başlık ile geliyor.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-weight:700">₺299</div>
+              <button class="small-btn" onclick="prefillAndOpen('Pacify Travel',299)">Seç</button>
+            </div>
+          </div>
+
+          <div class="card small" role="article">
+            <h4>Pacify Deluxe (Özel)</h4>
+            <p style="color:var(--muted);margin:6px 0">Sınırlı üretim, premium kılıf ve özel renkler.</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div style="font-weight:700">₺399</div>
+              <button class="small-btn" onclick="prefillAndOpen('Pacify Deluxe',399)">Seç</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonials -->
+        <h3 style="margin-top:18px">Kullanıcı Yorumları</h3>
+        <div class="testimonials">
+          <div class="testimonial">
+            <strong>Melis K.</strong>
+            <p style="margin:6px 0;color:var(--muted)">"Yoğun ofis günlerinde 5 dakikada sakinleşmeme yardımcı oldu. Tasarım çok şık."</p>
+          </div>
+          <div class="testimonial">
+            <strong>Emre A.</strong>
+            <p style="margin:6px 0;color:var(--muted)">"Yıkaması kolay ve taşıma kılıfı çok kullanışlı. Tavsiye ederim."</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="card" style="margin-top:18px">
+        <h3>SSS</h3>
+        <dl class="faq">
+          <dt>Hijyen nasıl sağlanıyor?</dt>
+          <dd>Başlık %100 tıbbi silikon; kaynatılabilir ve sterilize edilebilir. Her ürünle hijyen kılıfı gönderiyoruz.</dd>
+
+          <dt>Ürün cinsel içerikli mi?</dt>
+          <dd>Hayır. Ürünlerimiz rahatlama ve anksiyete yönetimi için tasarlanmıştır. Herhangi bir tıbbi veya cinsel iddia taşımamaktadır.</dd>
+
+          <dt>İade politikası nedir?</dt>
+          <dd>Açılmamış ve orijinal ambalajında 14 gün içinde iade kabul ediyoruz. İade şartları sayfasına göz atınız.</dd>
+        </dl>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="small-btn" onclick="scrollToSection('contact')">İletişim</button>
+          <button class="small-btn" onclick="downloadTOS()">Satın Alma Koşulları (PDF)</button>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" style="margin-top:18px">
+        <h3>İletişim</h3>
+        <p style="color:var(--muted)">Sipariş, toptan talepler ve kurumsal sorular için bize yazın.</p>
+        <form id="contactForm" onsubmit="submitContact(event)" style="display:grid;gap:8px;max-width:620px">
+          <input type="text" id="name" placeholder="Adınız" required style="padding:10px;border-radius:8px;border:0;background:var(--card);color:inherit">
+          <input type="email" id="email" placeholder="E-posta" required style="padding:10px;border-radius:8px;border:0;background:var(--card);color:inherit">
+          <textarea id="message" placeholder="Mesajınız" rows="4" style="padding:10px;border-radius:8px;border:0;background:var(--card);color:inherit"></textarea>
+          <div style="display:flex;gap:8px">
+            <button class="add" type="submit">Gönder</button>
+            <button class="small-btn" type="button" onclick="openDemo()">Demo</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Pacify — Tüm hakları saklıdır. | Gizlilik & Kullanım Koşulları
+    </footer>
+  </div>
+
+  <!-- Cart drawer -->
+  <div id="cart" class="cart-drawer" aria-hidden="true">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>Sepetiniz</strong>
+      <button onclick="toggleCart()" class="small-btn">Kapat</button>
+    </div>
+    <div id="cart-items" style="margin-top:8px;min-height:80px"></div>
+    <div class="cart-actions">
+      <div style="font-weight:700">Toplam: ₺<span id="cart-total">0</span></div>
+      <div>
+        <button class="small-btn" onclick="clearCart()">Temizle</button>
+        <button class="add" onclick="checkout()">Satın Al</button>
+      </div>
+    </div>
+    <div style="margin-top:8px;color:var(--muted);font-size:12px">Siparişinizi e-posta olarak alırız. Gerçek ödeme entegrasyonu için Stripe/PayPal bilgilerinizi ekleyin.</div>
+  </div>
+
+<script>
+  // Basit state
+  const state = {
+    qty: 1,
+    selectedVariant: {color:'Pastel Pembe', price:249, title:'Pacify Classic'},
+    cart: []
+  };
+
+  // Init
+  document.getElementById('year').textContent = new Date().getFullYear();
+  updateQty();
+  setupVariants();
+  updateCartCount();
+
+  function scrollToSection(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  function setupVariants(){
+    document.querySelectorAll('.variant').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.variant').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        state.selectedVariant.color = btn.dataset.color;
+        state.selectedVariant.price = Number(btn.dataset.price);
+        document.getElementById('price').textContent = '₺' + btn.dataset.price;
+      });
+    });
+  }
+
+  function changeQty(delta){
+    state.qty = Math.max(1, state.qty + delta);
+    updateQty();
+  }
+  function updateQty(){
+    document.getElementById('qty').textContent = state.qty;
+  }
+
+  function addToCart(){
+    const item = {
+      id: Date.now(),
+      title: state.selectedVariant.title || 'Pacify Classic',
+      variant: state.selectedVariant.color,
+      price: state.selectedVariant.price || 249,
+      qty: state.qty
+    };
+    state.cart.push(item);
+    saveCart();
+    updateCartUI();
+    toggleCart(true);
+    alert('Ürün sepete eklendi.');
+  }
+
+  function prefillAndOpen(title,price){
+    state.selectedVariant.title = title;
+    state.selectedVariant.price = price;
+    document.getElementById('price').textContent = '₺' + price;
+    // reset qty
+    state.qty = 1; updateQty();
+    // mark first variant active visually
+    document.querySelectorAll('.variant').forEach(b=>b.classList.remove('active'));
+    document.querySelector('.variant').classList.add('active');
+    scrollToSection('products');
+    window.scrollBy({top:200,behavior:'smooth'});
+  }
+
+  // Cart persistence (localStorage)
+  function saveCart(){
+    localStorage.setItem('pacify_cart', JSON.stringify(state.cart));
+    updateCartCount();
+  }
+  function loadCart(){
+    const raw = localStorage.getItem('pacify_cart');
+    if(raw) state.cart = JSON.parse(raw);
+  }
+  function updateCartCount(){
+    loadCart();
+    const count = state.cart.reduce((s,i)=>s+i.qty,0);
+    document.getElementById('cart-count').textContent = count;
+  }
+
+  function updateCartUI(){
+    loadCart();
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    if(state.cart.length === 0){
+      container.innerHTML = '<div style="color:var(--muted);padding:12px">Sepetiniz boş.</div>';
+    } else {
+      state.cart.forEach(it=>{
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#fff6f6,#ffdede)"></div>
+          <div style="flex:1">
+            <div style="font-weight:700">${it.title}</div>
+            <div style="color:var(--muted);font-size:13px">${it.variant} · ${it.qty} adet</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700">₺${it.price * it.qty}</div>
+            <button class="small-btn" onclick="removeFromCart(${it.id})">Kaldır</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+    document.getElementById('cart-total').textContent = state.cart.reduce((s,i)=>s + i.price * i.qty,0);
+    saveCart();
+  }
+
+  function removeFromCart(id){
+    state.cart = state.cart.filter(i=>i.id !== id);
+    saveCart();
+    updateCartUI();
+    updateCartCount();
+  }
+  function clearCart(){
+    if(confirm('Sepeti temizlemek istiyor musunuz?')){
+      state.cart = []; saveCart(); updateCartUI(); updateCartCount();
+    }
+  }
+
+  function toggleCart(forceOpen){
+    const el = document.getElementById('cart');
+    el.classList.toggle('open', !!forceOpen ? true : !el.classList.contains('open'));
+    if(el.classList.contains('open')){ updateCartUI(); el.setAttribute('aria-hidden','false'); }
+    else el.setAttribute('aria-hidden','true');
+  }
+
+  // Checkout: basit mailto ile sipariş özeti gönderme (örnek). Burayı gerçek ödeme ile değiştirin.
+  function checkout(){
+    if(state.cart.length === 0){ alert('Sepetiniz boş.'); return; }
+    const total = state.cart.reduce((s,i)=>s + i.price * i.qty,0);
+    const lines = state.cart.map(i=>`${i.title} - ${i.variant} x${i.qty} = ₺${i.price*i.qty}`).join('%0D%0A');
+    const body = encodeURIComponent(`Sipariş Özeti:%0D%0A${lines}%0D%0AToplam: ₺${total}%0D%0A%0D%0AAd: %0D%0AE-posta: %0D%0ATelefon: %0D%0ANot: `);
+    // Replace shop@yoursite.com with your order inbox
+    const mailto = `mailto:shop@yoursite.com?subject=Yeni Sipariş - Pacify&body=${body}`;
+    window.location.href = mailto;
+  }
+
+  // Contact form — mailto fallback
+  function submitContact(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const msg = document.getElementById('message').value;
+    const body = encodeURIComponent(`İsim: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${msg}`);
+    window.location.href = `mailto:info@yoursite.com?subject=İletişim Formu - Pacify&body=${body}`;
+  }
+
+  // Demo modal (basit alert)
+  function openDemo(){
+    alert('Kısa demo: Ürünü ağzınıza nazikçe yerleştirin, derin nefes alın, birkaç dakika rahatlayın. Ürünü paylaşmayın; kişisel kullanım içindir. (Gerçek kullanım talimatlarını ürün paketine ekleyin.)');
+  }
+
+  function downloadTOS(){
+    alert('Satın alma koşullarınızı PDF olarak yüklemek için bu butonu sunucunuza entegre edin. (Şu an demo modu.)');
+  }
+
+  // Small helpers
+  function removeAllStorage(){
+    // debug
+    localStorage.removeItem('pacify_cart');
+    state.cart = [];
+    updateCartUI();
+    updateCartCount();
+  }
+
+  // On load — ensure cart UI
+  loadCart();
+  updateCartUI();
+  updateCartCount();
+</script>
+</body>
+</html>
